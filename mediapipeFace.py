@@ -43,23 +43,21 @@ with mp_facedetector.FaceDetection(min_detection_confidence=0.7) as face_detecti
                 bbox_area = boundBox[2] * boundBox [3]
 
 
+            end = time.time()
+            totalTime = end - start
+
+            fps = 1 / totalTime
 
 
-        end = time.time()
-        totalTime = end - start
+            cv2.circle(image, center_bbox, radius=3, color=(0, 0, 255), thickness=2)
+            cv2.putText(image, f'x_dis: {int(x_displacement)}', (330,70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
+            cv2.putText(image, f'y_dis: {int(y_displacement)}', (330,110), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
+            cv2.putText(image, f'{int(detection.score[0]*100)}%', (boundBox[0], boundBox[1] - 20), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,255,0), 2)
 
-        fps = 1 / totalTime
-
-
-        cv2.circle(image, center_bbox, radius=3, color=(0, 0, 255), thickness=2)
-        cv2.putText(image, f'x_dis: {int(x_displacement)}', (330,70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
-        cv2.putText(image, f'y_dis: {int(y_displacement)}', (330,110), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
-        cv2.putText(image, f'{int(detection.score[0]*100)}%', (boundBox[0], boundBox[1] - 20), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,255,0), 2)
-
-        cv2.putText(image, f'FPS: {int(fps)}', (20,70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
-        cv2.line(image, (center_point[0], 0), (center_point[0], h), (0, 255, 0), thickness=2)
-        cv2.line(image, (0, center_point[1]), (w, center_point[1]), (0, 255, 0), thickness=2)
-        cv2.imshow('Face Detection', image)
+            cv2.putText(image, f'FPS: {int(fps)}', (20,70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
+            cv2.line(image, (center_point[0], 0), (center_point[0], h), (0, 255, 0), thickness=2)
+            cv2.line(image, (0, center_point[1]), (w, center_point[1]), (0, 255, 0), thickness=2)
+            cv2.imshow('Face Detection', image)
 
         if cv2.waitKey(5) & 0xFF == 27:
             break

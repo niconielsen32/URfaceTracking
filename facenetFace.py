@@ -38,24 +38,21 @@ while cap.isOpened():
 
             bbox_area = (w-x) * (h-y)
         
+        end = time.time()
+        totalTime = end - start
 
+        fps = 1 / totalTime
+        
+        cv2.putText(frame, text, (x, y-20), cv2.FONT_HERSHEY_SIMPLEX, 1.5,(0, 255, 0), 2)
+        cv2.rectangle(frame,(x,y),(w,h),(0,255,0),2)
+        cv2.circle(frame, center_bbox, radius=3, color=(0, 0, 255), thickness=2)
+        cv2.putText(frame, f'x_dis: {int(x_displacement)}', (310,70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
+        cv2.putText(frame, f'y_dis: {int(y_displacement)}', (310,110), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
 
-    end = time.time()
-    totalTime = end - start
-
-    fps = 1 / totalTime
-    
-
-    cv2.putText(frame, text, (x, y-20), cv2.FONT_HERSHEY_SIMPLEX, 1.5,(0, 255, 0), 2)
-    cv2.rectangle(frame,(x,y),(w,h),(0,255,0),2)
-    cv2.circle(frame, center_bbox, radius=3, color=(0, 0, 255), thickness=2)
-    cv2.putText(frame, f'x_dis: {int(x_displacement)}', (310,70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
-    cv2.putText(frame, f'y_dis: {int(y_displacement)}', (310,110), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
-
-    cv2.putText(frame, f'FPS: {int(fps)}', (20,70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
-    cv2.line(frame, (center_point[0], 0), (center_point[0], height), (0, 255, 0), thickness=2)
-    cv2.line(frame, (0, center_point[1]), (width, center_point[1]), (0, 255, 0), thickness=2)
-    cv2.imshow("Frame", frame)
+        cv2.putText(frame, f'FPS: {int(fps)}', (20,70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
+        cv2.line(frame, (center_point[0], 0), (center_point[0], height), (0, 255, 0), thickness=2)
+        cv2.line(frame, (0, center_point[1]), (width, center_point[1]), (0, 255, 0), thickness=2)
+        cv2.imshow("Frame", frame)
 
 
     if cv2.waitKey(25) & 0xFF == ord('q'):
