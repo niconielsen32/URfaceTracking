@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import time
 
-def haar(cap, face_cascade):
+def haar(cap, face_cascade, write = False, filename = "image.png"):
     error = False
     start = time.time()
 
@@ -32,7 +32,8 @@ def haar(cap, face_cascade):
         cv2.putText(img, f'FPS: {int(fps)}', (20,70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0,255,0), 2)
         cv2.line(img, (center_point[0], 0), (center_point[0], height), (0, 255, 0), thickness=2)
         cv2.line(img, (0, center_point[1]), (width, center_point[1]), (0, 255, 0), thickness=2)
-        cv2.imshow('Face Detection', img)
+        if(write):
+            cv2.imwrite(filename, img)
     else:
         end = start
         totalTime = 0
@@ -44,3 +45,17 @@ def haar(cap, face_cascade):
     
 
     return x_displacement, y_displacement, totalTime, bbox_area, fps, totalTime, error
+
+
+if __name__ == "__main__":
+
+    cap = cv2.VideoCapture(0)
+    face_cascade = cv2.CascadeClassifier('models/haarcascade_frontalface_alt2.xml')
+    x_displacement = 0
+    y_displacement = 0
+    totalTime = 0
+    bbox_area = 0
+    fps = 0
+    totalTime = 0
+    while (True):
+        x_displacement, y_displacement, totalTime, bbox_area, fps, totalTime, error = haar(cap, face_cascade)
