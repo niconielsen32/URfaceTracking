@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import time
 
-def haar(cap, face_cascade, write = False, filename = "image.png"):
+def haar(cap, face_cascade, write = False, show = False, filename = "image.png"):
     error = False
     start = time.time()
 
@@ -34,6 +34,8 @@ def haar(cap, face_cascade, write = False, filename = "image.png"):
         cv2.line(img, (0, center_point[1]), (width, center_point[1]), (0, 255, 0), thickness=2)
         if(write):
             cv2.imwrite(filename, img)
+        if(show):
+            cv2.imshow(filename, img)
     else:
         end = start
         totalTime = 0
@@ -58,4 +60,4 @@ if __name__ == "__main__":
     fps = 0
     totalTime = 0
     while (True):
-        x_displacement, y_displacement, totalTime, bbox_area, fps, totalTime, error = haar(cap, face_cascade)
+        x_displacement, y_displacement, totalTime, bbox_area, fps, totalTime, error = haar(cap, face_cascade, write=True)
